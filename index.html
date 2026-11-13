@@ -26,8 +26,8 @@
   .track { height:10px; background:#2a2326; border-radius:6px; overflow:hidden; }
   .fill { height:100%; border-radius:6px; }
   .gallery { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
-  .gallery img { width:100%; border-radius:12px; display:block; }
-  a.btn { display:inline-block; margin:4px 6px 0 0; padding:8px 14px; background:var(--pink); color:#222; border-radius:20px; text-decoration:none; font-weight:600; font-size:.9rem; }
+  .gallery img, .og { width:100%; border-radius:12px; display:block; }
+  a.btn { display:inline-block; margin:8px 6px 0 0; padding:8px 14px; background:var(--pink); color:#222; border-radius:20px; text-decoration:none; font-weight:600; font-size:.9rem; }
 </style>
 </head>
 <body>
@@ -40,6 +40,19 @@
       <h1>NUTTOBELT2</h1>
       <div class="sub">4K osu!mania • 🇹🇭 Thailand</div>
     </div>
+  </div>
+
+  <div class="card">
+    <h2>osu!mania stats (auto)</h2>
+    <div class="row">
+      <div class="stat"><b id="pp">-</b><span>4K pp</span></div>
+      <div class="stat"><b id="grank">-</b><span>Global</span></div>
+      <div class="stat"><b id="crank">-</b><span>Thailand</span></div>
+      <div class="stat"><b id="acc">-</b><span>Accuracy</span></div>
+      <div class="stat"><b id="pc">-</b><span>Plays</span></div>
+      <div class="stat"><b id="pt">-</b><span>Hours</span></div>
+    </div>
+    <div class="sub" id="upd" style="margin-top:10px"></div>
   </div>
 
   <div class="card">
@@ -69,6 +82,12 @@
   </div>
 
   <div class="card">
+    <h2>Mania Tracker</h2>
+    <img class="og" src="https://mania-tracker.com/api/og?kind=player&username=NUTTOBELT2" alt="Mania Tracker card">
+    <a class="btn" href="https://mania-tracker.com/player/NUTTOBELT2/skills" target="_blank">ดูสกิลทั้งหมด</a>
+  </div>
+
+  <div class="card">
     <h2>Gallery</h2>
     <div class="gallery">
       <img src="pic1.jpg" alt="">
@@ -95,6 +114,23 @@
     `<div class="bar"><div class="l"><span>${n}</span><span>${v}</span></div>
      <div class="track"><div class="fill" style="width:${v/22*100}%;background:${c}"></div></div></div>`
   ).join("");
+
+  fetch("stats.json?t=" + Date.now())
+    .then(r => r.json())
+    .then(d => {
+      const n = x => (x == null ? "-" : Number(x).toLocaleString());
+      const set = (id, v) => document.getElementById(id).textContent = v;
+      set("pp", n(Math.round(d.pp)));
+      set("grank", d.global_rank ? "#" + n(d.global_rank) : "-");
+      set("crank", d.country_rank ? "#" + n(d.country_rank) : "-");
+      set("acc", d.accuracy != null ? d.accuracy.toFixed(2) + "%" : "-");
+      set("pc", n(d.play_count));
+      set("pt", n(d.play_hours));
+      set("upd", "อัปเดตล่าสุด: " + new Date(d.updated).toLocaleString("th-TH"));
+    })
+    .catch(() => {
+      document.getElementById("upd").textContent = "ยังไม่มีข้อมูลอัตโนมัติ";
+    });
 </script>
 </body>
 </html>
