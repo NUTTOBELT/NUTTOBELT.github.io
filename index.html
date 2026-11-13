@@ -1,15 +1,100 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NUTTOBELT</title>
-  <style>
-    body { font-family: sans-serif; max-width: 600px; margin: 60px auto; padding: 0 20px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NUTTOBELT2 | osu!mania</title>
+<style>
+  :root { --bg:#2a2326; --card:#352c30; --text:#f3e9ee; --muted:#b9a8b0; --pink:#f08ab4; --gold:#e6b450; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:system-ui,sans-serif; }
+  .wrap { max-width:640px; margin:0 auto; padding:24px 16px 60px; }
+  .banner { height:150px; border-radius:16px; background:linear-gradient(135deg,#6b3a52,#2f2a4a) center/cover; }
+  .head { display:flex; gap:16px; align-items:flex-end; margin:-45px 16px 0; }
+  .avatar { width:96px; height:96px; border-radius:50%; border:4px solid var(--bg); object-fit:cover; background:#444; }
+  h1 { margin:0; font-size:1.6rem; }
+  .sub { color:var(--muted); font-size:.9rem; }
+  .card { background:var(--card); border-radius:16px; padding:18px; margin-top:16px; }
+  .card h2 { margin:0 0 12px; font-size:.85rem; letter-spacing:.08em; color:var(--muted); text-transform:uppercase; }
+  .big { font-size:2.8rem; font-weight:700; }
+  .row { display:flex; gap:12px; flex-wrap:wrap; }
+  .stat { flex:1 1 130px; background:#2a2326; border-radius:12px; padding:12px; text-align:center; }
+  .stat b { display:block; font-size:1.4rem; color:var(--gold); }
+  .stat span { font-size:.8rem; color:var(--muted); }
+  .bar { margin:10px 0; }
+  .bar .l { display:flex; justify-content:space-between; font-size:.9rem; margin-bottom:4px; }
+  .track { height:10px; background:#2a2326; border-radius:6px; overflow:hidden; }
+  .fill { height:100%; border-radius:6px; }
+  .gallery { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+  .gallery img { width:100%; border-radius:12px; display:block; }
+  a.btn { display:inline-block; margin:4px 6px 0 0; padding:8px 14px; background:var(--pink); color:#222; border-radius:20px; text-decoration:none; font-weight:600; font-size:.9rem; }
+</style>
 </head>
 <body>
-  <h1>yeah hi</h1>
-  <p>bro idk why'd you enter</p>
+<div class="wrap">
+
+  <div class="banner" style="background-image:url('banner.jpg')"></div>
+  <div class="head">
+    <img class="avatar" src="avatar.jpg" alt="avatar">
+    <div>
+      <h1>NUTTOBELT2</h1>
+      <div class="sub">4K osu!mania • 🇹🇭 Thailand</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>4K Skill Rating (MinaCalc 0.72.3)</h2>
+    <div class="big">19.18</div>
+    <div class="sub">#16,950 Global • #249 Thailand</div>
+    <div class="row" style="margin-top:14px">
+      <div class="stat"><b>5- dan</b><span>Regular</span></div>
+      <div class="stat"><b>5-- dan</b><span>LN</span></div>
+      <div class="stat"><b>219</b><span>Plays</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Dan by skill</h2>
+    <div class="row">
+      <div class="stat"><b>6</b><span>Tech (cleared)</span></div>
+      <div class="stat"><b>5-</b><span>Jack</span></div>
+      <div class="stat"><b>5--</b><span>Stamina</span></div>
+      <div class="stat"><b>3++</b><span>Speed</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Skill breakdown</h2>
+    <div id="bars"></div>
+  </div>
+
+  <div class="card">
+    <h2>Gallery</h2>
+    <div class="gallery">
+      <img src="pic1.jpg" alt="">
+      <img src="pic2.jpg" alt="">
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Links</h2>
+    <a class="btn" href="https://osu.ppy.sh" target="_blank">osu! profile</a>
+    <a class="btn" href="https://github.com/NUTTOBELT" target="_blank">GitHub</a>
+  </div>
+
+</div>
+
+<script>
+  const skills = [
+    ["Technical",20.71,"#86b36e"],["Stamina",20.43,"#b3705f"],
+    ["Jumpstream",19.52,"#6f84e0"],["LN",18.84,"#ee6b6b"],
+    ["Stream",18.32,"#8a63d2"],["Handstream",17.27,"#b560c0"],
+    ["Chordjack",15.45,"#c9a05a"],["Jackspeed",13.18,"#c9708a"]
+  ];
+  document.getElementById("bars").innerHTML = skills.map(([n,v,c]) =>
+    `<div class="bar"><div class="l"><span>${n}</span><span>${v}</span></div>
+     <div class="track"><div class="fill" style="width:${v/22*100}%;background:${c}"></div></div></div>`
+  ).join("");
+</script>
 </body>
 </html>
